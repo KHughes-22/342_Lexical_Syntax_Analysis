@@ -41,8 +41,9 @@ printf("ERROR - cannot open front.in \n");
 else {
 getChar();
 do {
-lex();
-} while (nextToken != ____________);
+      lex();
+
+} while (nextToken != EOF);
 }
 }
 /*****************************************************/
@@ -59,6 +60,26 @@ addChar();
 nextToken = RIGHT_PAREN;
 break;
 //YOUR CODE
+case '=':
+addChar();
+nextToken = ASSIGN_OP;
+break;
+case '+':
+addChar();
+nextToken = ADD_OP;
+break;
+case '-':
+addChar();
+nextToken = SUB_OP;
+break;
+case '*':
+addChar();
+nextToken = MULT_OP;
+break;
+case '/':
+addChar();
+nextToken = DIV_OP;
+break;
 }
 return nextToken;
 }
@@ -67,6 +88,8 @@ return nextToken;
 void addChar() {
 if (lexLen <= 98) {
 //YOUR CODE
+lexeme[lexLen] = nextChar;
+lexlen++;
 }
 else
 printf("Error - lexeme is too long \n");
@@ -78,11 +101,15 @@ void getChar() {
 if ((nextChar = getc(in_fp)) != EOF) {
 if (isalpha(nextChar))
 charClass = LETTER;
-else if
-      //YOUR CODE
+else if (isdigit(nextChar))
+charClass = DIGIT
 else 
+//unkown symbol
 // YOUR CODE;
+charClass = lookup(nextChar);
+lookup(nextChar)
 }
+//end of file
 else
 charClass = EOF;
 }
@@ -113,10 +140,21 @@ nextToken = IDENT;
 break;
 /* Parse integer literals */
 //YOUR CODE
-/* Parentheses and operators */
+case DIGIT:
+addChar();
+getChar();
+while (charClass == DIGIT){
+      addChar();
+      getChar();
+}
 break;
+/* Parentheses and operators */
 case UNKNOWN:
-//YOUR CODE
+addChar();
+getChar();
+while (charClass == UNKNOWN)
+addChar();
+getChar();
 break;
 /* EOF */
 case EOF:
