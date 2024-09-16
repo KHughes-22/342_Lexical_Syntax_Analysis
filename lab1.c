@@ -87,12 +87,9 @@ int lookup(char ch) {
 void addChar() {
       if (lexLen <= 98) {
       //YOUR CODE
-      //printf("length %i", lexLen);
       lexeme[lexLen] = nextChar;
-      //printf("print lexeme %c \n", nextChar);
-      //printf("lemme %s", lexeme);
+      //printf("lexeme at position %i: %c",lexLen, lexeme[lexLen]);
       lexLen++;
-
       }
       else
       printf("Error - lexeme is too long \n");
@@ -105,16 +102,16 @@ void getChar() {
       if ((nextChar = getc(in_fp)) != EOF) 
       {
             if (isalpha(nextChar))
+            {
             charClass = LETTER;
+            }
             else if (isdigit(nextChar))
             charClass = DIGIT;
             else 
             {     
             //unkown symbol
             // YOUR CODE;
-            //charClass = lookup(nextChar);
             charClass = UNKNOWN;
-            //lookup(nextChar);
             }
       }
 //end of file
@@ -125,6 +122,15 @@ void getChar() {
 /* getNonBlank - a function to call getChar until it
 returns a non-whitespace character */
 void getNonBlank() {
+      getChar();
+      // if (isspace(nextChar)){
+      //       while (isspace(nextChar))
+      //       { 
+      //             getChar();
+      //       }
+      // }
+      // else
+      // getChar();
       while (isspace(nextChar))
       { 
             getChar();
@@ -137,19 +143,18 @@ expressions */
 int lex() {
       lexLen = 0;
       getNonBlank();
-      //printf("Printing next char: %c \n", nextChar);
+      //getChar();
       switch (charClass) {
       /* Parse identifiers */
             case LETTER:
-                  //printf("In letter: %c", nextChar);
-                  // addChar();
-                  // getChar();
+                  addChar();
+                  getChar();
                   while (charClass == LETTER || charClass == DIGIT) {
-                        printf("In letter: %c", nextChar);
                         addChar();
                         getChar();
                   }
                   nextToken = IDENT;
+                  lexeme[lexLen] = 0;
                   break;
             /* Parse integer literals */
             //YOUR CODE
@@ -161,14 +166,14 @@ int lex() {
                         getChar();
                   }
                   nextToken = INT_LIT;
+                  lexeme[lexLen] = 0;
                   break;
             /* Parentheses and operators */
             case UNKNOWN:
+                  //lookup will add the char to the lexeme
+                  printf("next char: %c \n", nextChar);
                   nextToken = lookup(nextChar);
-                  while (charClass == UNKNOWN){
-                        addChar();
-                        getChar();
-                  }
+                  lexeme[lexLen] = 0;
                   break;
             /* EOF */
             case EOF:
