@@ -87,8 +87,10 @@ int lookup(char ch) {
 void addChar() {
       if (lexLen <= 98) {
       //YOUR CODE
+      //printf("length %i", lexLen);
       lexeme[lexLen] = nextChar;
-      printf("print lexeme %c \n", nextChar);
+      //printf("print lexeme %c \n", nextChar);
+      //printf("lemme %s", lexeme);
       lexLen++;
 
       }
@@ -139,9 +141,11 @@ int lex() {
       switch (charClass) {
       /* Parse identifiers */
             case LETTER:
-                  addChar();
-                  getChar();
+                  //printf("In letter: %c", nextChar);
+                  // addChar();
+                  // getChar();
                   while (charClass == LETTER || charClass == DIGIT) {
+                        printf("In letter: %c", nextChar);
                         addChar();
                         getChar();
                   }
