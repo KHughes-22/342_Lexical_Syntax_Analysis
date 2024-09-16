@@ -1,2 +1,1 @@
-(sum + 47) / total
-oldsum - value /100
+list
