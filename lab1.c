@@ -122,15 +122,6 @@ void getChar() {
 /* getNonBlank - a function to call getChar until it
 returns a non-whitespace character */
 void getNonBlank() {
-      getChar();
-      // if (isspace(nextChar)){
-      //       while (isspace(nextChar))
-      //       { 
-      //             getChar();
-      //       }
-      // }
-      // else
-      // getChar();
       while (isspace(nextChar))
       { 
             getChar();
@@ -141,6 +132,9 @@ void getNonBlank() {
 /* lex - a simple lexical analyzer for arithmetic
 expressions */
 int lex() {
+      if (nextChar == 0){
+            getChar();
+      }
       lexLen = 0;
       getNonBlank();
       //getChar();
@@ -171,8 +165,8 @@ int lex() {
             /* Parentheses and operators */
             case UNKNOWN:
                   //lookup will add the char to the lexeme
-                  printf("next char: %c \n", nextChar);
                   nextToken = lookup(nextChar);
+                  getChar();
                   lexeme[lexLen] = 0;
                   break;
             /* EOF */
