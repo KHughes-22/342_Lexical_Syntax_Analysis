@@ -36,9 +36,10 @@ int lex();
 /* main driver */
 int main() {
       /* Open the input data file and process its contents */
-      if ((in_fp = fopen("front.txt", "r")) == NULL)
+      if ((in_fp = fopen("test.txt", "r")) == NULL)
             printf("ERROR - cannot open front.in \n");
       else {
+            getchar();
             do {
                   lex();
             } while (nextToken != EOF);
@@ -132,9 +133,10 @@ void getNonBlank() {
 /* lex - a simple lexical analyzer for arithmetic
 expressions */
 int lex() {
-      if (nextChar == 0){
-            getChar();
-      }
+      //if the nextchar is null(start of a line) then get the next char.
+      // if (nextChar == 0){
+      //       getChar();
+      // }
       lexLen = 0;
       getNonBlank();
       //getChar();
@@ -164,7 +166,7 @@ int lex() {
                   break;
             /* Parentheses and operators */
             case UNKNOWN:
-                  //lookup will add the char to the lexeme
+                  //lookup will add the nextchar to the Lexeme
                   nextToken = lookup(nextChar);
                   getChar();
                   lexeme[lexLen] = 0;
