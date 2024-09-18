@@ -36,7 +36,7 @@ int lex();
 /* main driver */
 int main() {
       /* Open the input data file and process its contents */
-      if ((in_fp = fopen("test.txt", "r")) == NULL)
+      if ((in_fp = fopen("front.txt", "r")) == NULL)
             printf("ERROR - cannot open front.in \n");
       else {
             getchar();
@@ -89,8 +89,9 @@ void addChar() {
       if (lexLen <= 98) {
       //YOUR CODE
       lexeme[lexLen] = nextChar;
-      //printf("lexeme at position %i: %c",lexLen, lexeme[lexLen]);
+      lexeme[lexLen + 1] = 0;
       lexLen++;
+      //printf("lexeme at position %i: %c",lexLen, lexeme[lexLen]);
       }
       else
       printf("Error - lexeme is too long \n");
@@ -110,7 +111,6 @@ void getChar() {
             charClass = DIGIT;
             else 
             {     
-            //unkown symbol
             // YOUR CODE;
             charClass = UNKNOWN;
             }
@@ -134,12 +134,11 @@ void getNonBlank() {
 expressions */
 int lex() {
       //if the nextchar is null(start of a line) then get the next char.
-      // if (nextChar == 0){
-      //       getChar();
-      // }
+      if (nextChar == 0){
+            getChar();
+      }
       lexLen = 0;
       getNonBlank();
-      //getChar();
       switch (charClass) {
       /* Parse identifiers */
             case LETTER:
@@ -150,7 +149,7 @@ int lex() {
                         getChar();
                   }
                   nextToken = IDENT;
-                  lexeme[lexLen] = 0;
+                  //lexeme[lexLen] = 0;
                   break;
             /* Parse integer literals */
             //YOUR CODE
@@ -162,14 +161,12 @@ int lex() {
                         getChar();
                   }
                   nextToken = INT_LIT;
-                  lexeme[lexLen] = 0;
                   break;
             /* Parentheses and operators */
             case UNKNOWN:
                   //lookup will add the nextchar to the Lexeme
                   nextToken = lookup(nextChar);
                   getChar();
-                  lexeme[lexLen] = 0;
                   break;
             /* EOF */
             case EOF:
